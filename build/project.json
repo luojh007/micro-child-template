@@ -1,0 +1,7 @@
+{
+  "name": "name",
+  "path": "/project",
+  "prefix": "/app1/",
+  "main": "/app1/app.js",
+  "store": "/app1/store.js"
+}
