@@ -5,7 +5,6 @@ const merge = require('webpack-merge')
 var config = require('../config')
 var utils = require('./utils')
 const TerserJSPlugin = require("terser-webpack-plugin");
-const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const OptimizeCssAssetsPlugin = require('optimize-css-assets-webpack-plugin')
 var projectConfig = require('./project.json')
 
@@ -51,12 +50,14 @@ module.exports = merge(baseWebpack, {
           resolve("src/view"),
         ],
         use: [
-          MiniCssExtractPlugin.loader,
+          // MiniCssExtractPlugin.loader,  //微服务化不可用
+          "style-loader",
           {
             loader: "css-loader",
             options: {
               modules: {
-                localIdentName: "[name]__[local]___[hash:base64:5]"
+                // localIdentName: "[name]__[local]___[hash:base64:5]"
+                localIdentName: projectConfig.name + "[name]__[local]___[hash:base64:5]"
               },
               sourceMap: config.build.productionSourceMap
             }
@@ -67,8 +68,8 @@ module.exports = merge(baseWebpack, {
               plugins:
                 process.env.NODE_ENV === "production"
                   ? loader => [
-                    require("postcss-import")({ root: loader.resourcePath }),
-                    require("autoprefixer")()
+                    require("postcss-import")({ root: loader.resourcePath }), //合并css，减少http请求
+                    require("autoprefixer")() //为不同浏览器加上前缀
                   ]
                   : []
             }
@@ -78,6 +79,7 @@ module.exports = merge(baseWebpack, {
           }
         ]
       },
+      //以下是对全局样式对打包
       {
         test: /(\.css|\.less)$/,
         exclude: [
@@ -85,7 +87,7 @@ module.exports = merge(baseWebpack, {
           resolve("src/view"),
         ],
         use: [
-          MiniCssExtractPlugin.loader,
+          'style-loadr',
           {
             loader: "css-loader",
             options: {
@@ -106,11 +108,13 @@ module.exports = merge(baseWebpack, {
     ]
   },
   plugins: [
-   
-    new MiniCssExtractPlugin({
-      filename: "./css/[name].css",
-      chunkFilename: "./css/[name].css"
-    }),
+    new CopyWebpackPlugin([
+      {
+        from: path.resolve(__dirname, "../static"),
+        to: config.build.assetsSubDirectory,
+        ignore: [".*"]
+      }
+    ])
   ],
 }
 )

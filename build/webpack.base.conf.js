@@ -13,7 +13,7 @@ module.exports = {
     // publicPath: proModal
     //   ? config.build.assetsPublicPath
     //   : config.dev.assetsPublicPath
-    libraryTarget: 'system',
+    // libraryTarget: 'system',
     
   },
   module: {

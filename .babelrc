@@ -35,6 +35,7 @@
         "style": true
       }
     ],
-    "@babel/plugin-transform-modules-commonjs"
+    "@babel/plugin-transform-modules-commonjs",
+    "react-hot-loader/babel"
   ]
 }

@@ -1,35 +1,27 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-// import { Provider } from 'react-redux'
-// import App from './view/app'
-// import store from './store/index'
+import { Provider } from 'react-redux'
+import App from './view/app'
+import store from './store/index'
 import singleSpaReact from 'single-spa-react'
-
-// class Main extends React.Component {
-//   constructor() {
-//     super();
-//   }
-//   render() {
-//     return <Provider store={store}><App /></Provider>
-//   }
-// }
-// if (process.env.NODE_ENV === 'development') {
-//   // 开发环境直接渲染
-//   ReactDOM.render(<Main />, document.getElementById('app'));
-// }
-class SimpleMain extends React.Component {
-  constructor(props) {
-    super(props);
+import "react-hot-loader";
+class Main extends React.Component {
+  constructor() {
+    super();
   }
   render() {
-    return <div>我是子系统</div>
+    return <Provider store={store}><App /></Provider>
   }
+}
+if (process.env.NODE_ENV === 'development') {
+  // 开发环境直接渲染
+  ReactDOM.render(<Main />, document.getElementById('app'));
 }
 const reactLifecycles = singleSpaReact({
   React,
   ReactDOM,
   rootComponent: (spa) => {
-    return <SimpleMain />
+    return <Main store={spa.customProps.store.storeInstance} globalEventDistributor={spa.customProps.globalEventDistributor} />
   },
   domElementGetter: domElementGetter,
 })
