@@ -1,5 +1,5 @@
 {
-  "name": "name",
+  "name": "app1",
   "path": "/project",
   "prefix": "/app1/",
   "main": "/app1/app.js",

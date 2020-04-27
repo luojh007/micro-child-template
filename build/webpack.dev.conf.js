@@ -7,6 +7,7 @@ const FriendlyErrorsWebpackPlugin = require('friendly-errors-webpack-plugin')
 function resolve(dir) {
   return path.join(__dirname, "..", dir);
 }
+var projectConfig = require('./project.json')
 
 Object.keys(baseWebpack.entry).forEach(function (name) {
   baseWebpack.entry[name] = ["./build/dev-client"].concat(
@@ -86,5 +87,13 @@ module.exports = merge(baseWebpack, {
       clearConsole: true,
     }),
   ],
+  output: {
+    // path: config.build.assetsRoot,
+    // filename: 'js/[name].js',
+    // chunkFilename: 'js/[name]/[chunkhash].js', // [name] bundle-loader 的name配置值
+    // publicPath: projectConfig.prefix, //在output中指定模块配置好的 publicPath
+    libraryTarget: 'system',
+    library: projectConfig.name + '_[name]', //模块的名称
+  },
 }
 )

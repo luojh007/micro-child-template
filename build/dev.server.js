@@ -18,7 +18,12 @@ var hotMiddleware = require('webpack-hot-middleware')(compiler, {
   hot: true,
 
 })
-
+app.use(function (req, res, next) {
+  res.set("Access-Control-Allow-Origin", "*");
+  res.set("Access-Control-Allow-Headers", "X-Requested-With");
+  res.set("Access-Control-Allow-Methods", "PUT,POST,GET,DELETE,OPTIONS");
+  next();
+});
 app.use(history({
   rewrites: [
     { from: /\w+\.html/, to: '/' },

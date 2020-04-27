@@ -1,11 +1,9 @@
 const path = require('path');
 const webpack = require('webpack');
-const HtmlWebpackPlugin = require('html-webpack-plugin');
 const baseWebpack = require('./webpack.base.conf')
 const merge = require('webpack-merge')
 var config = require('../config')
 var utils = require('./utils')
-const AddAssetHtmlPlugin = require('add-asset-html-webpack-plugin');
 const TerserJSPlugin = require("terser-webpack-plugin");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const OptimizeCssAssetsPlugin = require('optimize-css-assets-webpack-plugin')
@@ -16,14 +14,16 @@ function resolve(dir) {
 }
 module.exports = merge(baseWebpack, {
   mode: 'production',
-  entry: path.resolve(__dirname, '../src/index.js'), //指定入口文件，程序从这里开始编译,__dirname当前所在目录, ../表示上一级目录, ./同级目录
+  entry: {
+    app: path.resolve('src/index.js'),
+  },
   output: {
     path: config.build.assetsRoot,
-    filename: '[name].js',
+    filename: 'js/[name].js',
     chunkFilename: 'js/[name]/[chunkhash].js', // [name] bundle-loader 的name配置值
-    publicPath: projectConfig.prefix, //在output中指定模块配置好的 publicPath
+    // publicPath: projectConfig.prefix, //在output中指定模块配置好的 publicPath
     libraryTarget: 'system',
-    library: projectConfig.name, //模块的名称
+    library: projectConfig.name + '_[name]', //模块的名称
   },
   //压缩js,css
   optimization: {
@@ -37,9 +37,9 @@ module.exports = merge(baseWebpack, {
       }),
       new OptimizeCssAssetsPlugin({})
     ],
-    splitChunks: {
-      chunks: 'all',
-    },
+    // splitChunks: {
+    //   chunks: 'all',
+    // },
   },
   module: {
     rules: [
@@ -106,14 +106,7 @@ module.exports = merge(baseWebpack, {
     ]
   },
   plugins: [
-    new webpack.DllReferencePlugin({
-      manifest: require(path.join(__dirname, '../dist', 'vendorsReact-manifest.json')),
-      name: 'vendorsReact'
-    }),
-    new webpack.DllReferencePlugin({
-      manifest: require(path.join(__dirname, '../dist', 'vendors-manifest.json')),
-      name: 'vendors'
-    }),   
+   
     new MiniCssExtractPlugin({
       filename: "./css/[name].css",
       chunkFilename: "./css/[name].css"
@@ -121,3 +114,4 @@ module.exports = merge(baseWebpack, {
   ],
 }
 )
+
