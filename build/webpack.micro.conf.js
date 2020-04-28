@@ -6,6 +6,7 @@ var config = require('../config')
 var utils = require('./utils')
 const TerserJSPlugin = require("terser-webpack-plugin");
 const OptimizeCssAssetsPlugin = require('optimize-css-assets-webpack-plugin')
+const CopyWebpackPlugin = require("copy-webpack-plugin");
 var projectConfig = require('./project.json')
 
 function resolve(dir) {
@@ -15,6 +16,7 @@ module.exports = merge(baseWebpack, {
   mode: 'production',
   entry: {
     app: path.resolve('src/index.js'),
+    store: path.resolve('src/store/index.js')
   },
   output: {
     path: config.build.assetsRoot,
@@ -87,7 +89,7 @@ module.exports = merge(baseWebpack, {
           resolve("src/view"),
         ],
         use: [
-          'style-loadr',
+          'style-loader',
           {
             loader: "css-loader",
             options: {

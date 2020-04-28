@@ -38,10 +38,18 @@ function RootRouter() {
           loader: () => import('./routes/pageTwo'),
           loading: Loading,
         })
-      }, {
-        path: '/*',
+      }, 
+      {
+        path: '/index.html',
         component: Loadable({
           loader: () => import('./routes'),
+          loading: Loading,
+        })
+      }, 
+      {
+        path: '*',
+        component: Loadable({
+          loader: () => import('./routes/Error'),
           loading: Loading,
         })
       },

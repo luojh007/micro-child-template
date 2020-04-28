@@ -3,18 +3,22 @@ var config = require('../config')
 function resolve(dir) {
   return path.join(__dirname, '..', dir)
 }
+console.log(process.env.RUN_ENV);
+var projectConfig = require('./project.json')
 module.exports = {
   entry: {
     app: resolve("src/index.js"),
+    store: path.resolve('src/store/index.js')
   },
   output: {
     filename: '[name].js',
     path: config.build.assetsRoot,
-    // publicPath: proModal
-    //   ? config.build.assetsPublicPath
-    //   : config.dev.assetsPublicPath
-    // libraryTarget: 'system',
-    
+    publicPath: process.env.NODE_ENV === "production"
+      ? config.build.assetsPublicPath
+      : config.dev.assetsPublicPath,
+    libraryTarget: 'system',
+    library: projectConfig.name + '_[name]', //模块的名称
+
   },
   module: {
     rules: [

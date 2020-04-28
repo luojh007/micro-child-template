@@ -13,15 +13,15 @@ class Main extends React.Component {
     return <Provider store={store}><App /></Provider>
   }
 }
-if (process.env.NODE_ENV === 'development') {
-  // 开发环境直接渲染
-  ReactDOM.render(<Main />, document.getElementById('app'));
-}
+// if (process.env.NODE_ENV === 'development') {
+//   // 开发环境直接渲染
+//   ReactDOM.render(<Main />, document.getElementById('app'));
+// }
 const reactLifecycles = singleSpaReact({
   React,
   ReactDOM,
   rootComponent: (spa) => {
-    return <Main store={spa.customProps.store.storeInstance} globalEventDistributor={spa.customProps.globalEventDistributor} />
+    return <Main store={spa.store.storeInstance} globalEventDistributor={spa.globalEventDistributor} />
   },
   domElementGetter: domElementGetter,
 })
@@ -48,4 +48,4 @@ export const mount = [reactLifecycles.mount];
 
 export const unmount = [reactLifecycles.unmount];
 
-export const unload = [reactLifecycles.unload];
+// export const unload = [reactLifecycles.unload];

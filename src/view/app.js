@@ -4,14 +4,14 @@ import ReactDOM from 'react-dom'
 import { BrowserRouter as RouterContainer } from "react-router-dom";
 import { connect } from 'react-redux'
 class App extends Component {
-  constructor(props){
+  constructor(props) {
     super(props);
-    console.log(props)
+    console.log('app的props：' + props)
   }
   render() {
     const supportsHistory = 'pushState' in window.history;
     return (
-      <RouterContainer forceRefresh={!supportsHistory} >
+      <RouterContainer basename="/app1" forceRefresh={!supportsHistory} >
         <RootRouter />
       </RouterContainer>
     )

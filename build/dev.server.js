@@ -1,5 +1,6 @@
 const webpack = require('webpack');
 var history = require('connect-history-api-fallback');
+var path = require("path");
 
 const webpackConfig = require('./webpack.dev.conf')
 const compiler = webpack(webpackConfig);
@@ -29,9 +30,15 @@ app.use(history({
     { from: /\w+\.html/, to: '/' },
   ]
 }));
+
 app.use(devMiddleware)
 
 app.use(hotMiddleware)
+var staticPath = path.posix.join(
+  config.dev.assetsPublicPath,
+  config.dev.assetsSubDirectory
+);
+app.use(staticPath, express.static("./static"));
 
 app.listen(port, () => {
   console.log("成功启动：localhost:" + port)
