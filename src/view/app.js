@@ -6,7 +6,7 @@ import { connect } from 'react-redux'
 class App extends Component {
   constructor(props) {
     super(props);
-    console.log('app的props：' + props)
+    console.log('app的props：',props)
   }
   render() {
     const supportsHistory = 'pushState' in window.history;
@@ -19,7 +19,7 @@ class App extends Component {
 }
 function select(state) {
   return {
-    app: state
+    app: state.app
   }
 }
 function action(dispatch) {

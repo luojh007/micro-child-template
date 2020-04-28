@@ -12,4 +12,5 @@ const middleware = [
 ]
 const store = createStore(Reducer,composeEnhancers(applyMiddleware(...middleware)))
 
+console.log('全局的store是：',store);
 export default store
