@@ -1,8 +1,10 @@
 import React, { Component } from 'react'
 import styles from './style.less'
 import { Button } from 'antd'
-export default class index extends Component {
+import { connect } from 'react-redux'
+class PageTwo extends Component {
   render() {
+    console.log('第二个页面render', this.props)
     return (
       <div className={styles.main}>
         我是第二个页面
@@ -15,3 +17,16 @@ export default class index extends Component {
     )
   }
 }
+function select(state) {
+  return {
+    pageOne: state.pageOne,
+    pageTwo: state.pageTwo,
+  }
+}
+function dispatch(dispatch) {
+  return {
+    dispatch
+  }
+}
+export default connect(select, dispatch)(PageTwo)
+

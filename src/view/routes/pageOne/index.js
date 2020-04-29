@@ -4,19 +4,29 @@ import { Button } from 'antd'
 import { connect } from 'react-redux'
 // import { hot } from "react-hot-loader/root";
 
-import Sub from '../../../components/SubComponentOne'
+import SubOne from '../../../components/SubComponentOne'
+import SubTwo from '../../../components/SubComponentTwo'
 class PageOne extends Component {
-  constructor(props){
+  constructor(props) {
     super(props);
     console.log(props);
   }
-  
+  addData = () => {
+    this.props.dispatch({
+      type: 'PAGETWO_GET',
+      actions: {
+        data: '我是从第一个页面传过来的数据'
+      }
+    })
+  }
   render() {
-    
+
     return (
       <div className={styles.main}>
         我是第一个页面
-        <Sub />
+        <SubOne />
+        <SubTwo />
+        <Button onClick={this.addData}>新增数据</Button>
         <div>
           <Button onClick={() => {
             this.props.history.push('/index.html')
